@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from schema.modelos import Veiculo
 from database.banco_fake import veiculos_db
 
@@ -15,10 +15,11 @@ async def buscar_veiculo(id_veiculo: int):
     return veiculos_db[id_veiculo -1]
 
 
-@route_veiculos.post('/adicionar-veiculo')
+@route_veiculos.post('/adicionar-veiculo', status_code=status.HTTP_201_CREATED,response_model=Veiculo)
 async def adicionar_veiculo(veiculo: Veiculo):
     veiculo.id = len(veiculos_db)
-    return veiculos_db.append(veiculo)
+    veiculos_db.append(veiculo)
+    return veiculo
 
 
 @route_veiculos.put('/atualizar-veiculo/{id_veiculo}', response_model=Veiculo)
