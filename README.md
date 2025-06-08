@@ -19,7 +19,7 @@ Uma API simples para gerenciamento de veículos, construída com **FastAPI**.
 
 ## ⚙️ **Tecnologias**
 
-- **Python 3.11+**
+- **Python 3.12.6**
 - **FastAPI** (Framework web)
 - **Pydantic** (Validação de dados)
 - **Swagger UI** (Documentação interativa em `/docs`)
@@ -30,7 +30,7 @@ Uma API simples para gerenciamento de veículos, construída com **FastAPI**.
 
 ### **Pré-requisitos**
 
-- Python 3.11+ instalado
+- Python 3.12.6 instalado
 - Pip (gerenciador de pacotes)
 
 ### **Passos**

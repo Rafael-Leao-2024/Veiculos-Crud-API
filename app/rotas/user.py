@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from schema.modelos import UserPublic
+from app.schema.modelos import UserPublic
 
 users_db = []
 

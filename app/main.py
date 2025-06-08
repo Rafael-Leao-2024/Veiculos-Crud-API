@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from rotas.veiculo import route_veiculos
-from rotas.user import route_user
+from app.rotas.veiculo import route_veiculos
+from app.rotas.user import route_user
 
 app = FastAPI()
 
