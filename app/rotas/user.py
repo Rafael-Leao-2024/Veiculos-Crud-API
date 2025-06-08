@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status
-from database.banco_fake import users_db
 from schema.modelos import UserPublic
+
+users_db = []
 
 route_user = APIRouter(prefix="/usuarios", tags=['Usuarios'])
 
