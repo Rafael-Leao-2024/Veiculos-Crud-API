@@ -5,7 +5,7 @@ conn = sqlite3.connect('bancosqlite.db')
 cur = conn.cursor()
 cur.execute('''
 CREATE TABLE IF NOT EXISTS usuarios(
-    id INT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(255)

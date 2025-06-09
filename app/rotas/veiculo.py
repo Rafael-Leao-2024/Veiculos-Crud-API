@@ -3,7 +3,6 @@ from app.schema.modelos import Veiculo
 from app.database.sessao_db import get_db
 
 
-
 route_veiculos = APIRouter(prefix='/veiculos', tags=['Veiculos'])
 
 @route_veiculos.get('/', response_model=list[Veiculo], status_code=status.HTTP_200_OK)
@@ -62,7 +61,10 @@ async def atualizar_veiculo(id_veiculo: int, veiculo: Veiculo | None = None, cur
 
 @route_veiculos.delete('/delete/{id_veiculo}', status_code=status.HTTP_204_NO_CONTENT)
 async def deletar_veiculo(id_veiculo: int, cursor=Depends(get_db)):
+    veiculos = cursor.execute('''SELECT * FROM veiculos''').fetchall()
+    if id_veiculo > len(veiculos):
+        raise HTTPException(status_code=404, detail=f'Id nao encontrado tamanho é de {len(veiculos)}')
     cursor.execute("DELETE FROM veiculos WHERE id = ?", (id_veiculo,))
-    return {"message": "Veiculo de ID: {} deletado com sucesso".format(id_veiculo)}
+    return {"message": f"Veiculo de ID: {id_veiculo} deletado com sucesso"}
 
 

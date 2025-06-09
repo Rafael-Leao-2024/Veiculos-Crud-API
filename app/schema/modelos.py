@@ -5,7 +5,9 @@ class Usuario(BaseModel):
     id: int
     nome: str
     email:str
-    senha: str | None = None
+
+class UsuarioInDB(Usuario):
+    senha: str
     
 
 class Veiculo(BaseModel):
@@ -17,8 +19,5 @@ class Veiculo(BaseModel):
     preco: float | None = None
     is_disponivel : bool = True
 
-class UserPublic(BaseModel):
-    id: int
-    nome: str
-    email:str
+
 
