@@ -7,11 +7,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 router_login = APIRouter(prefix='/login', tags=["Login"])
 
-@router_login.post('/')
+@router_login.post('/', response_model=Usuario)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], cursor=Depends(get_db)):
     usuario = cursor.execute('SELECT * FROM usuarios WHERE nome = ?', (form_data.username, )).fetchone()
     if not usuario:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario nao Encontrado")
-    Usuario(**usuario)
-    print(usuario)
-    return {"login": "Faça login"}
+    user_dict = dict(zip([coluna[0] for coluna in cursor.description], usuario))
+    return user_dict
