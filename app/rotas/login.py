@@ -1,19 +1,21 @@
 from typing import Annotated, Optional
 from datetime import datetime, timedelta
 
-from app.schema.modelos import Usuario, UsuarioInDB, TokenData, Token
-from app.database.sessao_db import get_db
+from app.schema.schema_usuario import Usuario, UsuarioInDB
+from app.schema.schema_token import TokenData, Token
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from werkzeug.security import check_password_hash
 from jose import JWTError, jwt
+
 from dotenv import load_dotenv
 import sqlite3
 import os
 
 load_dotenv()
 
-ALGORITHM = "HS256"
+ALGORITHM = os.getenv('ALGORITHM')
 SECRET_KEY = os.getenv('SECRET_KEY')
 EXPIRE_TOKEN_ACESSO = os.getenv("EXPIRE_TOKEN_ACESSO")
 

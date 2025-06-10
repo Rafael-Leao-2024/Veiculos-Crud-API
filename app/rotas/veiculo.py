@@ -1,6 +1,6 @@
-from fastapi import APIRouter, status, Depends, HTTPException
-from app.schema.modelos import Veiculo
+from fastapi import APIRouter, HTTPException, status, Depends 
 from app.database.sessao_db import get_db
+from app.schema.schema_veiculo import Veiculo
 
 
 route_veiculos = APIRouter(prefix='/veiculos', tags=['Veiculos'])
