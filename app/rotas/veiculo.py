@@ -17,9 +17,10 @@ async def listar_veiculos(cursor=Depends(get_db)):
 async def buscar_veiculo(id_veiculo: int, cursor=Depends(get_db)):
     resposta = cursor.execute("SELECT * FROM veiculos WHERE id = '%s'" % id_veiculo)
     veiculo = resposta.fetchone()
+    if not veiculo:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Veículo não encontrado")
     colunas = [desc[0] for desc in cursor.description]
-    dados = dict(zip(colunas, veiculo))
-    return dados
+    return dict(zip(colunas, veiculo))
 
 @route_veiculos.get('/is-locado/', status_code=status.HTTP_200_OK)
 async def is_disponivel(locado: int, cursor=Depends(get_db)):
