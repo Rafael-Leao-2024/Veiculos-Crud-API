@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Depends 
 from app.manage_database.sessao_db import get_db
-from app.schema.schema_veiculo import Veiculo
+from app.schema.schema_veiculo import Veiculo, VeiculoUpdate
 from app.rotas import login
 
 
@@ -44,7 +44,10 @@ VALUES (?, ?, ?, ?, ?, ?);
 
 
 @route_veiculos.put('/atualizar-veiculo/{id_veiculo}', response_model=Veiculo, status_code=status.HTTP_200_OK)
-async def atualizar_veiculo(id_veiculo: int, veiculo: Veiculo | None = None, cursor=Depends(get_db)):
+async def atualizar_veiculo(id_veiculo: int, veiculo: VeiculoUpdate | None = None, cursor=Depends(get_db)):
+    veiculo_db = cursor.execute("SELECT * FROM veiculos WHERE id = '%s'" % int(id_veiculo)).fetchone()
+    if not veiculo_db:
+        raise HTTPException(status_code=404, detail="Veiculo not found")
     veiculo_dicionario = veiculo.dict()
     marca = veiculo_dicionario.get('marca')
     modelo = veiculo_dicionario.get('modelo')
@@ -53,12 +56,12 @@ async def atualizar_veiculo(id_veiculo: int, veiculo: Veiculo | None = None, cur
     preco = veiculo_dicionario.get('preco')
     is_disponivel = veiculo_dicionario.get('is_disponivel')
 
-    veiculo = Veiculo(id=id_veiculo, marca=marca, modelo=modelo, ano=ano, cor=cor, preco=preco, is_disponivel=is_disponivel)
+    veiculo_update = Veiculo(id=id_veiculo, marca=marca, modelo=modelo, ano=ano, cor=cor, preco=preco, is_disponivel=is_disponivel)
 
     cursor.execute("""UPDATE veiculos
                    SET marca = ?, modelo = ?, ano = ?, cor = ?, preco = ?, is_disponivel = ?
                    WHERE id = ?""", (marca, modelo, ano, cor, preco, is_disponivel, id_veiculo))
-    return veiculo
+    return veiculo_update
 
 
 @route_veiculos.delete('/delete/{id_veiculo}', status_code=status.HTTP_204_NO_CONTENT)

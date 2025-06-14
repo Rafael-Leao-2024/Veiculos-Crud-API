@@ -1,8 +1,11 @@
 from fastapi import APIRouter, status, Depends, HTTPException
+
 from app.schema.schema_usuario import Usuario, UsuarioInDB, UsuarioOutput
 from app.manage_database.sessao_db import get_db
-from werkzeug.security import generate_password_hash
 from app.rotas.login import pegar_usuario_atual_ativo
+from werkzeug.security import generate_password_hash
+
+
 
 route_user = APIRouter(prefix="/usuarios", tags=['Usuarios'], dependencies=[Depends(pegar_usuario_atual_ativo)])
 
