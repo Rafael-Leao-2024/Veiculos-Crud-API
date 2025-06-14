@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Depends 
-from app.database.sessao_db import get_db
+from app.manage_database.sessao_db import get_db
 from app.schema.schema_veiculo import Veiculo
 from app.rotas import login
 

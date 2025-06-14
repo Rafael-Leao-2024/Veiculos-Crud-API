@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from app.schema.schema_usuario import Usuario, UsuarioInDB, UsuarioOutput
-from app.database.sessao_db import get_db
+from app.manage_database.sessao_db import get_db
 from werkzeug.security import generate_password_hash
 from app.rotas import login
 
