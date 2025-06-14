@@ -195,3 +195,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 bancosqlite.db
+teste.py

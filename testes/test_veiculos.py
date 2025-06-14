@@ -3,12 +3,11 @@ from app.main import app  # Importe sua aplicação FastAPI
 
 client = TestClient(app)
 
-# def test_buscar_veiculo_id_valido():
-#     # Supondo que o veículo com ID=1 existe no banco
-#     response = client.get("/veiculos/1")
-#     assert response.status_code == 200
-#     assert "id" in response.json()
-#     assert "marca" in response.json()  # Adapte para seus campos
+def test_buscar_veiculo_id_valido():
+    response = client.get("/veiculos/1")
+    assert response.status_code == 200
+    assert "id" in response.json()
+    assert "marca" in response.json()  # Adapte para seus campos
 
 def test_buscar_veiculo_id_inexistente():
     response = client.get("/veiculos/999999")  # ID que não existe

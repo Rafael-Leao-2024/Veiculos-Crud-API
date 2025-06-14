@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends 
 from app.database.sessao_db import get_db
 from app.schema.schema_veiculo import Veiculo
+from app.rotas import login
 
 
 route_veiculos = APIRouter(prefix='/veiculos', tags=['Veiculos'])
@@ -15,7 +16,7 @@ async def listar_veiculos(cursor=Depends(get_db)):
 
 @route_veiculos.get('/{id_veiculo}', response_model=Veiculo)
 async def buscar_veiculo(id_veiculo: int, cursor=Depends(get_db)):
-    resposta = cursor.execute("SELECT * FROM veiculos WHERE id = '%s'" % id_veiculo)
+    resposta = cursor.execute("SELECT * FROM veiculos WHERE id = '%s'" % int(id_veiculo))
     veiculo = resposta.fetchone()
     if not veiculo:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Veículo não encontrado")

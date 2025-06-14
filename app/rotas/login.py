@@ -22,7 +22,7 @@ EXPIRE_TOKEN_ACESSO = os.getenv("EXPIRE_TOKEN_ACESSO")
 
 router_login = APIRouter(prefix='/login', tags=["Login"])
 
-schema_oauth2 = OAuth2PasswordBearer(tokenUrl="token")
+schema_oauth2 = OAuth2PasswordBearer(tokenUrl="login/token")
 
 # funcoes auxiliares
 
@@ -81,7 +81,6 @@ async def pegar_usuario_atual_ativo(usuario_atual: Usuario = Depends(pegar_usuar
 @router_login.post('/token', response_model=Token)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = autenticar_usuario(form_data.username, form_data.password)
-    print(user)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
